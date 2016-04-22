@@ -14,7 +14,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 # F22:
 # http://pkgs.fedoraproject.org/cgit/rpms/dbus-python.git/commit/?id=b00d726b5b3e8f7f590ed3eb95160d1b68003339
 #
-# Python-dbus seems can have issues
+# Python-dbus may have issues
 # - may not be suitable due to type-guessing
 # - threading problems with libdbus
 
