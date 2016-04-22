@@ -28,7 +28,7 @@ introspection_xml =  \
             </property>
         </interface>
         <interface name='org.me.test1.swear'>
-            <method name='fuck_off'>
+            <method name='whatsup'>
                 <arg type='s' name='response' direction='out' />
             </method>
         </interface>
@@ -51,8 +51,8 @@ class MyDBUSService():
                 loop.quit()
 
         elif interface_name == "org.me.test1.swear":
-            if method_name == "fuck_off":
-                ret = GLib.Variant("s", "Fuck off '%s!'" % self._who)
+            if method_name == "whatsup":
+                ret = GLib.Variant("s", "@!#$*&@!, %s!'" % self._who)
                 t = GLib.Variant.new_tuple(ret)
                 invocation.return_value(t)
 

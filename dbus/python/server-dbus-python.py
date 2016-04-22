@@ -34,8 +34,8 @@ class MyDBUSServiceF22(dbus.service.Object):
         GLib.MainLoop().quit()
 
     @dbus.service.method('org.me.test1.swear')
-    def fuck_off(self):
-        return "Fuck off, %s!" % self._who
+    def whatsup(self):
+        return "@!#$*&@!, %s!" % self._who
 
     @dbus.service.property('org.me.test1', signature='s', emits_changed_signal=True)
     def Who(self):
@@ -51,6 +51,7 @@ class MyDBUSServiceF22(dbus.service.Object):
 
 # Introspection doesn't work for properties in F23
 
+# lame
 class Property():
     def __init__(self, value, writeable=False, signature="s"):
         self.value = value
@@ -78,8 +79,8 @@ class MyDBUSServiceF23(dbus.service.Object):
         return "Quitting!"
 
     @dbus.service.method('org.me.test1.swear')
-    def fuck_off(self):
-        return "Fuck off, %s!" % self.props["org.me.test1"]["Who"].value
+    def whatsup(self):
+        return "@!#$*&@!, %s!" % self.props["org.me.test1"]["Who"].value
 
     @dbus.service.method(dbus_interface=dbus.PROPERTIES_IFACE, in_signature='ss', out_signature='v')
     def Get(self, interface_name, property_name):

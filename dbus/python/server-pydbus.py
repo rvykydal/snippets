@@ -28,7 +28,7 @@ class MyDBUSService(object):
                 </property>
             </interface>
             <interface name='org.me.test1.swear'>
-                <method name='fuck_off'>
+                <method name='whatsup'>
                     <arg type='s' name='response' direction='out' />
                 </method>
             </interface>
@@ -45,8 +45,8 @@ class MyDBUSService(object):
     def quit(self):
         loop.quit()
 
-    def fuck_off(self):
-        return "Fuck off, %s!" % self._who
+    def whatsup(self):
+        return "@!#$*&@!, %s!" % self._who
 
     @property
     def State(self):
