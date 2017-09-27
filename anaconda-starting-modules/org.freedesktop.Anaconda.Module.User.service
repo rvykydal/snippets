@@ -1,0 +1,5 @@
+[D-BUS Service]
+Name=org.freedesktop.Anaconda.Module.User
+Exec=/usr/sbin/anaconda-module-user
+User=root
+#SystemdService=dbus-org.freedesktop.Anaconda.Module.User.service
