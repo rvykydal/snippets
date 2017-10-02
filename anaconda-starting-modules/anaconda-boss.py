@@ -15,8 +15,9 @@
 # - explicitly start services vs watching names:
 #   (+/-) explicit start has a timeout?
 
-from gi.repository import GLib
+from gi.repository import GLib, Gio
 from pydbus import SystemBus
+from pydbus.error import register_error
 import time
 import random
 import os
@@ -28,6 +29,12 @@ logging.basicConfig(filename='/tmp/anaconda.log',
                     level=logging.DEBUG,
                     format='%(asctime)s %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p')
+
+DOMAIN = Gio.DBusError.quark() # TODO: Register new domain.
+
+@register_error("org.freedesktop.Anaconda.Module.Error.InvalidPropertyValue", DOMAIN, 1000)
+class InvalidPropertyValueError(Exception):
+    pass
 
 ANACONDA_ADDON_SERVICE_PREFIX="org.freedesktop.Anaconda.Addon"
 ANACONDA_MODULE_SERVICE_PREFIX="org.freedesktop.Anaconda.Module"
@@ -54,7 +61,7 @@ class Boss(object):
 
     def __init__(self, modules, addons=None):
         self._modules = modules
-        self._addons = addons
+        self._addons = addons or []
         self._started_module_services = []
         self._failed_module_services = []
 
@@ -121,6 +128,26 @@ class Boss(object):
                 module.EchoString("Boss told me that all required modules were started: %s or failed: %s." %
                                   (self._started_module_services, self._failed_module_services))
 
+            self.test_timezone_property()
+
+    def test_timezone_property(self):
+        logging.debug("%s: test_timezone_property" % self.__class__.__name__)
+        tz_module = bus.get(ANACONDA_MODULE_SERVICE_PREFIX+".Timezone")
+        tz = tz_module.TimezoneSpec
+        logging.debug("%s: old timezone: %s" % (self.__class__.__name__, tz))
+        #tz_module.setTimezoneSpec("tz_new")
+        tz_module.TimezoneSpec = "tz_new"
+        tz = tz_module.TimezoneSpec
+        logging.debug("%s: new timezone: %s" % (self.__class__.__name__, tz))
+        try:
+            #tz_module.setTimezoneSpec("invalid_tz")
+            tz_module.TimezoneSpec = "invalid_tz"
+        except InvalidPropertyValueError as e:
+            logging.debug("%s: new timezone error: %s" % (self.__class__.__name__, e))
+        else:
+            tz = tz_module.TimezoneSpec
+            logging.debug("%s: new timezone: %s" % (self.__class__.__name__, tz))
+
     def StartModules(self):
         """starts anaconda modules (including addons)"""
         logging.debug("%s: StartModules started" % self.__class__.__name__)
@@ -158,10 +185,11 @@ class Boss(object):
             if name.startswith(ANACONDA_ADDON_SERVICE_PREFIX):
                 self._addons.append(name[len(ANACONDA_ADDON_SERVICE_PREFIX)+1:])
 
-    def initialize(self):
+    def initialize(self, addons=True):
         """initialize boss before publishing"""
         logging.debug("%s: intialize started" % self.__class__.__name__)
-        self.find_addons()
+        if addons:
+            self.find_addons()
         #time.sleep(random.randrange(1,4))
 
         # Check that no modules are running
@@ -180,10 +208,11 @@ logging.debug(80*"#")
 # Network service does not exist (doesn't have .service file)
 #anaconda_modules = []
 #anaconda_modules = ["Timezone", "Storage"]
-anaconda_modules = ["Timezone", "Storage", "Payload", "Network", "User"]
+#anaconda_modules = ["Timezone", "Storage", "Payload", "Network", "User"]
+anaconda_modules = ["Timezone"]
 
 boss = Boss(modules=anaconda_modules)
-boss.initialize()
+boss.initialize(addons=False)
 bus.publish("org.freedesktop.Anaconda.Boss", boss)
 
 def start():
