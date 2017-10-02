@@ -11,7 +11,9 @@
 #   - hybrid solution - starting systemd service via dbus
 #   - we still may want module reload handling by boss (based on dbus names API)
 # - do we want to be able to restart boss while keeping modules alive?
-
+#
+# - explicitly start services vs watching names:
+#   (+/-) explicit start has a timeout?
 
 from gi.repository import GLib
 from pydbus import SystemBus
@@ -161,6 +163,14 @@ class Boss(object):
         logging.debug("%s: intialize started" % self.__class__.__name__)
         self.find_addons()
         #time.sleep(random.randrange(1,4))
+
+        # Check that no modules are running
+        for service in self.required_module_services:
+            if dbus.NameHasOwner(service):
+                logging.error("%s: initialize: %s service has unexpected owner" %
+                              (self.__class__.__name__, service))
+
+
         logging.debug("%s: intialize finished" % self.__class__.__name__)
 
 logging.debug(80*"#")
@@ -180,10 +190,10 @@ def start():
     boss.EchoString("I am alive")
     return False
 
-def start_modules_and_addons_sync():
+def start_modules_and_addons():
     boss.StartModules()
     #boss.StartModulesSync()
     return False
 
-GLib.timeout_add_seconds(1, start_modules_and_addons_sync)
+GLib.timeout_add_seconds(1, start_modules_and_addons)
 loop.run()
