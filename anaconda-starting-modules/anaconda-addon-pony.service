@@ -1,0 +1,10 @@
+[Unit]
+Description=Anaconda Pony Addon Service
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.Anaconda.Addon.Pony
+ExecStart=/usr/sbin/anaconda-addon-pony
+
+[Install]
+Alias=dbus-org.freedesktop.Anaconda.Addon.Pony.service

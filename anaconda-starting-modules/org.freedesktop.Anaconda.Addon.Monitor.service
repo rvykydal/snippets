@@ -1,5 +1,6 @@
 [D-BUS Service]
 Name=org.freedesktop.Anaconda.Addon.Monitor
-Exec=/usr/sbin/anaconda-addon-monitor
+#Exec=/usr/sbin/anaconda-addon-monitor
+Exec=/bin/false
 User=root
-#SystemdService=dbus-org.freedesktop.Anaconda.Addon.Monitor.service
+SystemdService=dbus-org.freedesktop.Anaconda.Addon.Monitor.service

@@ -1,5 +1,6 @@
 [D-BUS Service]
 Name=org.freedesktop.Anaconda.Module.Timezone
-Exec=/usr/sbin/anaconda-module-timezone
+#Exec=/usr/sbin/anaconda-module-timezone
+Exec=/bin/false
 User=root
-#SystemdService=dbus-org.freedesktop.Anaconda.Module.Timezone.service
+SystemdService=dbus-org.freedesktop.Anaconda.Module.Timezone.service

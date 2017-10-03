@@ -49,4 +49,21 @@ sudo cp anaconda-addon-monitor.py /usr/sbin/anaconda-addon-monitor
 sudo chmod o+x /usr/sbin/anaconda-addon-monitor
 sudo cp org.freedesktop.Anaconda.Addon.Monitor.conf /usr/share/dbus-1/system.d
 
+# systemd integration
+# .service files are modified
+
+sudo cp anaconda-module-timezone.service /usr/lib/systemd/system
+sudo systemctl enable anaconda-module-timezone.service
+sudo cp anaconda-module-storage.service /usr/lib/systemd/system
+sudo systemctl enable anaconda-module-storage.service
+sudo cp anaconda-addon-pony.service /usr/lib/systemd/system
+sudo systemctl enable anaconda-addon-pony.service
+sudo cp anaconda-addon-monitor.service /usr/lib/systemd/system
+sudo systemctl enable anaconda-addon-monitor.service
+sudo cp anaconda-module-payload.service /usr/lib/systemd/system
+sudo systemctl enable anaconda-module-payload.service
+
+sudo cp anaconda-boss.service /usr/lib/systemd/system
+sudo systemctl enable anaconda-boss.service
+
 

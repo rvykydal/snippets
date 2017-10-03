@@ -1,0 +1,10 @@
+[Unit]
+Description=Anaconda Timezone Module Service
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.Anaconda.Module.Timezone
+ExecStart=/usr/sbin/anaconda-module-timezone
+
+[Install]
+Alias=dbus-org.freedesktop.Anaconda.Module.Timezone.service

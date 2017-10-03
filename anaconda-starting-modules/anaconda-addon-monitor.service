@@ -1,0 +1,10 @@
+[Unit]
+Description=Anaconda Monitor Addon Service
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.Anaconda.Addon.Monitor
+ExecStart=/usr/sbin/anaconda-addon-monitor
+
+[Install]
+Alias=dbus-org.freedesktop.Anaconda.Addon.Monitor.service

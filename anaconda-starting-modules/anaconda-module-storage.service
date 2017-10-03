@@ -1,0 +1,10 @@
+[Unit]
+Description=Anaconda Storage Module Service
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.Anaconda.Module.Storage
+ExecStart=/usr/sbin/anaconda-module-storage
+
+[Install]
+Alias=dbus-org.freedesktop.Anaconda.Module.Storage.service

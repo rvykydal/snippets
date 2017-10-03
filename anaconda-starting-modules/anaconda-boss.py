@@ -110,7 +110,6 @@ class Boss(object):
                 module = bus.get(service)
                 module.EchoString("Boss told me that all required modules were started: %s or failed: %s." %
                                   (self._started_module_services, self._failed_module_services))
-
             return True
         else:
             return False
@@ -173,6 +172,8 @@ log.debug(80*"#")
 # - Payload service does not have permissions (.conf file)
 # - Network service does not exist (doesn't have .service file)
 anaconda_modules = ["Timezone", "Storage", "Payload", "Network", "User"]
+# TODO: Crash1 crashes before publication on dbus
+# TODO: Crash2 crashes after publication on dbus
 
 boss = Boss(modules=anaconda_modules)
 boss.initialize()
@@ -186,6 +187,9 @@ def start_modules_and_addons():
     boss.StartModules()
     #boss.StartModulesSync()
     return False
+
+def watch_starting_modules_and_addons():
+    boss.watch_starting_modules()
 
 GLib.timeout_add_seconds(1, start_modules_and_addons)
 loop.run()

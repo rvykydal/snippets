@@ -1,5 +1,6 @@
 [D-BUS Service]
 Name=org.freedesktop.Anaconda.Module.Storage
-Exec=/usr/sbin/anaconda-module-storage
+#Exec=/usr/sbin/anaconda-module-storage
+Exec=/bin/false
 User=root
-#SystemdService=dbus-org.freedesktop.Anaconda.Module.Storage.service
+SystemdService=dbus-org.freedesktop.Anaconda.Module.Storage.service

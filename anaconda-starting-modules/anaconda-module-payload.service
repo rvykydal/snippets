@@ -1,0 +1,10 @@
+[Unit]
+Description=Anaconda Payload Module Service
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.Anaconda.Module.Payload
+ExecStart=/usr/sbin/anaconda-module-payload
+
+[Install]
+Alias=dbus-org.freedesktop.Anaconda.Module.Payload.service

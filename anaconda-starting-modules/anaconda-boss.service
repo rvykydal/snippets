@@ -1,0 +1,10 @@
+[Unit]
+Description=Anaconda Boss
+
+[Service]
+Type=dbus
+BusName=org.freedesktop.Anaconda.Boss
+ExecStart=/usr/sbin/anaconda-boss
+
+[Install]
+Alias=dbus-org.freedesktop.Anaconda.Boss.service

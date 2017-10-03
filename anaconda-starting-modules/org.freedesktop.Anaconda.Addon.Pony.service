@@ -1,5 +1,6 @@
 [D-BUS Service]
 Name=org.freedesktop.Anaconda.Addon.Pony
-Exec=/usr/sbin/anaconda-addon-pony
+#Exec=/usr/sbin/anaconda-addon-pony
+Exec=/bin/false
 User=root
-#SystemdService=dbus-org.freedesktop.Anaconda.Addon.Pony.service
+SystemdService=dbus-org.freedesktop.Anaconda.Addon.Pony.service

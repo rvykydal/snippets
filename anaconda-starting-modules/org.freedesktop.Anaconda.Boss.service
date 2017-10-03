@@ -1,7 +1,7 @@
 [D-BUS Service]
 Name=org.freedesktop.Anaconda.Boss
 # Prevent autoactivation out of systemd
-#Exec=/bin/false
-Exec=/usr/sbin/anaconda-boss
+#Exec=/usr/sbin/anaconda-boss
+Exec=/bin/false
 User=root
-#SystemdService=dbus-org.freedesktop.Anaconda.Boss.service
+SystemdService=dbus-org.freedesktop.Anaconda.Boss.service

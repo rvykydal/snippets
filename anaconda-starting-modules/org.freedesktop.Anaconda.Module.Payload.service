@@ -1,5 +1,6 @@
 [D-BUS Service]
 Name=org.freedesktop.Anaconda.Module.Payload
-Exec=/usr/sbin/anaconda-module-payload
+#Exec=/usr/sbin/anaconda-module-payload
+Exec=/bin/false
 User=root
-#SystemdService=dbus-org.freedesktop.Anaconda.Module.Payload.service
+SystemdService=dbus-org.freedesktop.Anaconda.Module.Payload.service
