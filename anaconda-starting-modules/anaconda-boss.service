@@ -1,5 +1,7 @@
 [Unit]
 Description=Anaconda Boss
+Wants=anaconda-modules.target
+Before=anaconda-modules.target
 
 [Service]
 Type=dbus

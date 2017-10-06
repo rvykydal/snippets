@@ -8,3 +8,4 @@ ExecStart=/usr/sbin/anaconda-addon-monitor
 
 [Install]
 Alias=dbus-org.freedesktop.Anaconda.Addon.Monitor.service
+WantedBy=anaconda-modules.target

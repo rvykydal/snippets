@@ -33,6 +33,7 @@ sudo cp org.freedesktop.Anaconda.Module.Payload.service /usr/share/dbus-1/system
 sudo cp anaconda-module-payload.py /usr/sbin/anaconda-module-payload
 sudo chmod o+x /usr/sbin/anaconda-module-payload
 # Test AccessDenied
+# This can make anaconda-modules.target not work
 #sudo cp org.freedesktop.Anaconda.Module.Payload.conf /usr/share/dbus-1/system.d 
 
 # For addons, we want to run all we find
@@ -52,6 +53,7 @@ sudo cp org.freedesktop.Anaconda.Addon.Monitor.conf /usr/share/dbus-1/system.d
 # systemd integration
 # .service files are modified
 
+sudo cp anaconda-modules.target /usr/lib/systemd/system
 sudo cp anaconda-module-timezone.service /usr/lib/systemd/system
 sudo systemctl enable anaconda-module-timezone.service
 sudo cp anaconda-module-storage.service /usr/lib/systemd/system
@@ -60,8 +62,8 @@ sudo cp anaconda-addon-pony.service /usr/lib/systemd/system
 sudo systemctl enable anaconda-addon-pony.service
 sudo cp anaconda-addon-monitor.service /usr/lib/systemd/system
 sudo systemctl enable anaconda-addon-monitor.service
-sudo cp anaconda-module-payload.service /usr/lib/systemd/system
-sudo systemctl enable anaconda-module-payload.service
+#sudo cp anaconda-module-payload.service /usr/lib/systemd/system
+#sudo systemctl enable anaconda-module-payload.service
 
 sudo cp anaconda-boss.service /usr/lib/systemd/system
 sudo systemctl enable anaconda-boss.service

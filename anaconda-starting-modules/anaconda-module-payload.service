@@ -8,3 +8,4 @@ ExecStart=/usr/sbin/anaconda-module-payload
 
 [Install]
 Alias=dbus-org.freedesktop.Anaconda.Module.Payload.service
+WantedBy=anaconda-modules.target

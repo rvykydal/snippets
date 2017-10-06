@@ -8,3 +8,4 @@ ExecStart=/usr/sbin/anaconda-module-timezone
 
 [Install]
 Alias=dbus-org.freedesktop.Anaconda.Module.Timezone.service
+WantedBy=anaconda-modules.target

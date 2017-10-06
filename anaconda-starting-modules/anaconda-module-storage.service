@@ -8,3 +8,4 @@ ExecStart=/usr/sbin/anaconda-module-storage
 
 [Install]
 Alias=dbus-org.freedesktop.Anaconda.Module.Storage.service
+WantedBy=anaconda-modules.target

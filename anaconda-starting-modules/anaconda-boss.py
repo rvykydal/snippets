@@ -43,6 +43,7 @@ class Boss(object):
         self._addons = addons or []
         self._started_module_services = []
         self._failed_module_services = []
+        self._service_watcher = None
 
     @property
     def modules(self):
@@ -163,15 +164,37 @@ class Boss(object):
         #time.sleep(random.randrange(1,4))
         log.debug("finished")
 
+    def _watch_starting_modules_cb(self, service, old, new):
+        if service in self.required_module_services:
+            if old:
+                log.error("%s service owner %s disappeared - can't cope with this unexpected situation" % (service, old))
+            if new:
+                log.debug("%s appeared on the bus" % service)
+                self._started_module_services.append(service)
+                if self.check_modules_started():
+                    self._service_watcher.disconnect()
+                    log.debug("disconnected")
+
+    def watch_starting_modules(self):
+        for service in self.required_module_services:
+            if dbus.NameHasOwner(service):
+                self._started_module_services.append(service)
+        # FIXME This is racy (can miss module started here)
+        if self.check_modules_started():
+            log.debug("all modules started, not watching")
+        else:
+            self._service_watcher = dbus.NameOwnerChanged.connect(self._watch_starting_modules_cb)
+            log.debug("watching")
+
 log.debug(80*"#")
 
 # Only working modules
-#anaconda_modules = ["Timezone", "Storage"]
+anaconda_modules = ["Timezone", "Storage"]
 # Try Also disfunctional modules
 # - User does not have a binary
 # - Payload service does not have permissions (.conf file)
 # - Network service does not exist (doesn't have .service file)
-anaconda_modules = ["Timezone", "Storage", "Payload", "Network", "User"]
+#anaconda_modules = ["Timezone", "Storage", "Payload", "Network", "User"]
 # TODO: Crash1 crashes before publication on dbus
 # TODO: Crash2 crashes after publication on dbus
 
@@ -191,5 +214,6 @@ def start_modules_and_addons():
 def watch_starting_modules_and_addons():
     boss.watch_starting_modules()
 
-GLib.timeout_add_seconds(1, start_modules_and_addons)
+#GLib.timeout_add_seconds(1, start_modules_and_addons)
+GLib.idle_add(watch_starting_modules_and_addons)
 loop.run()
